@@ -1,11 +1,15 @@
 <?php
 // URL SHORTENER
 // Please set the parameters to connect to your database in the line below:
-$db = mysqli_connect("127.0.0.1", "sht", "your_password", "sht");
+require_once "Mobile_Detect.php";
+$db = mysqli_connect("127.0.0.1", "sht", "c6b36f8b8a88180a6a42bb78f84ebe53b8", "sht");
 if ($db->connect_errno) {
     echo "Failed to connect to MySQL: (" . $db->connect_errno . ") " . $db->connect_error;
     exit(1);
 }
+//create clss to detect mobile
+$detect = new Mobile_Detect;
+
 //REDIRECTION
 if(count($_REQUEST)==1 && !isset($_REQUEST['makeurl'])){
     $shorturl="https://".$_SERVER['SERVER_NAME'].mysqli_real_escape_string($db,$_SERVER['REQUEST_URI']);
@@ -15,7 +19,7 @@ if(count($_REQUEST)==1 && !isset($_REQUEST['makeurl'])){
         $rdr="https://".$_SERVER['SERVER_NAME'];
     else{
         $r=mysqli_fetch_array($x);
-        if($r['mobileonly']==true && !isMobile())
+        if($r['mobileonly']==true && !$detect->isMobile())
             $rdr="https://".$_SERVER['SERVER_NAME'];
         else
             $rdr=$r['destinationurl'];

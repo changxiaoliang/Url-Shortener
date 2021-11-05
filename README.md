@@ -29,3 +29,7 @@ Check the logs of the web server.
 
 For any help, please send an email to: samuele@landi.ae
 
+
+Credit: 
+https://github.com/serbanghita/Mobile-Detect - A library to detect mobile
+browsers
